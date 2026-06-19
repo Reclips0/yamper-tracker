@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yamper Vault Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Rounded" rel="stylesheet">
+
+  <style>
+    :root {
+      --md-sys-color-primary: #795900;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #ffdf9e;
+      --md-sys-color-on-primary-container: #261a00;
+      --md-sys-color-secondary: #4bd6ff;
+      --md-sys-color-on-secondary: #003545;
+      --md-sys-color-surface: #fef8f0;
+      --md-sys-color-surface-variant: #f0e1cf;
+      --md-sys-color-on-surface: #1e1b16;
+      --md-sys-color-on-surface-variant: #4f4539;
+      --md-sys-color-outline: #817567;
+      --md-sys-color-background: #fffbfc;
+
+      --md-shape-corner-medium: 16px;
+      --md-shape-corner-extra-large: 28px;
+      --md-shape-corner-full: 9999px;
+      --md-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+      --md-duration-long2: 400ms;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-surface);
+      padding: 2rem;
+      line-height: 1.5;
+    }
+
+    header {
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      padding: 2.5rem 2rem;
+      border-radius: var(--md-shape-corner-extra-large);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 150px;
+      height: 150px;
+      background-color: var(--md-sys-color-secondary);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 55%;
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stats-badge {
+      background-color: var(--md-sys-color-on-primary-container);
+      color: var(--md-sys-color-primary-container);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--md-shape-corner-full);
+      font-weight: 700;
+      width: fit-content;
+      font-size: 0.9rem;
+      z-index: 1;
+    }
+
+    .controls-container {
+      background-color: var(--md-sys-color-surface);
+      border: 1px solid var(--md-sys-color-surface-variant);
+      border-radius: var(--md-shape-corner-extra-large);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface-variant);
+      min-width: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chip {
+      background-color: var(--md-sys-color-background);
+      border: 1px solid var(--md-sys-color-outline);
+      color: var(--md-sys-color-on-surface-variant);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--md-shape-corner-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all var(--md-duration-long2) var(--md-easing-emphasized);
+      user-select: none;
+    }
+
+    .chip:hover {
+      background-color: var(--md-sys-color-surface-variant);
+    }
+
+    .chip.active {
+      background-color: var(--md-sys-color-primary-container);
+      border-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary-container);
+    }
+
+    .chip .material-icons-rounded {
+      font-size: 18px;
+      display: none;
+    }
+
+    .chip.active .material-icons-rounded {
+      display: inline-block;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .yamper-card {
+      background-color: var(--md-sys-color-surface);
+      border: 1px solid var(--md-sys-color-surface-variant);
+      border-radius: var(--md-shape-corner-extra-large);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all var(--md-duration-long2) var(--md-easing-emphasized);
+      position: relative;
+    }
+
+    .yamper-card:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0px 12px 24px rgba(121, 89, 0, 0.06);
+    }
+
+    .image-container {
+      width: 100%;
+      aspect-ratio: 45 / 64;
+      background-color: var(--md-sys-color-surface-variant);
+      border-radius: 18px 18px 18px 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .yamper-card.collected .image-container::after {
+      content: 'COLLECTED';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: #005313;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--md-shape-corner-full);
+      letter-spacing: 0.5px;
+    }
+
+    .yamper-card.collected {
+      border-color: #a3cfbb;
+      background-color: #f4faf6;
+    }
+
+    .action-btn {
+      width: 100%;
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      padding: 0.75rem;
+      border-radius: var(--md-shape-corner-medium);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: auto;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+
+    .collected .action-btn {
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .set-number {
+      font-size: 0.85rem;
+      color: var(--md-sys-color-on-surface-variant);
+      background-color: var(--md-sys-color-surface-variant);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--md-shape-corner-full);
+      font-weight: 500;
+    }
+
+    .price-tag {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--md-sys-color-primary);
+    }
+
+    .error-msg {
+      grid-column: 1 / -1;
+      padding: 2rem;
+      background-color: #ffeaea;
+      color: #b3261e;
+      border-radius: var(--md-shape-corner-extra-large);
+      text-align: center;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><span class="material-icons-rounded">electric_bolt</span> Yamper Vault</h1>
+  <div class="stats-badge" id="total-stats">Computing status...</div>
+</header>
+
+<section class="controls-container">
+  <div class="filter-group" id="series-filter-row">
+    <span class="filter-label">Series:</span>
+  </div>
+
+  <div class="filter-group">
+    <span class="filter-label">Status:</span>
+    <div class="chip active" data-filter-type="status" data-value="all">
+      <span class="material-icons-rounded">check</span>Show All
+    </div>
+    <div class="chip" data-filter-type="status" data-value="collected">
+      <span class="material-icons-rounded">check</span>Collected Only
+    </div>
+    <div class="chip" data-filter-type="status" data-value="uncollected">
+      <span class="material-icons-rounded">check</span>Not Collected
+    </div>
+  </div>
+</section>
+
+<main class="card-grid" id="card-container">
+</main>
+
+<script>
+  let fullCollectionData = [];
+  let activeFilters = {
+    series: 'all',
+    status: 'all'
+  };
+
+  function getCollectedIds() {
+    const data = localStorage.getItem('yamper_collected_cards');
+    return data ? JSON.parse(data) : [];
+  }
+
+  function saveCollectedIds(ids) {
+    localStorage.setItem('yamper_collected_cards', JSON.stringify(ids));
+  }
+
+  function toggleOwnership(cardId) {
+    let collected = getCollectedIds();
+    if (collected.includes(cardId)) {
+      collected = collected.filter(id => id !== cardId);
+    } else {
+      collected.push(cardId);
+    }
+    saveCollectedIds(collected);
+    applyFiltersAndRender();
+  }
+
+  async function initDashboard() {
+    try {
+      // Fetch both configurations in parallel
+      const [categoriesRes, cardsRes] = await Promise.all([
+        fetch('categories.json'),
+        fetch('cards.json')
+      ]);
+
+      if (!categoriesRes.ok || !cardsRes.ok) throw new Error("Resource load issue");
+
+      const categories = await categoriesRes.json();
+      fullCollectionData = await cardsRes.json();
+
+      generateCategoryChips(categories);
+      setupStatusFilterListeners();
+      applyFiltersAndRender();
+    } catch (err) {
+      document.getElementById('card-container').innerHTML = `
+                    <div class="error-msg">
+                        <span class="material-icons-rounded" style="font-size:48px;">error_outline</span>
+                        <p><strong>Failed to parse system configuration dependencies.</strong></p>
+                        <p style="font-size: 0.85rem; margin-top:0.5rem">Verify cards.json and categories.json exist in this directory.</p>
+                    </div>
+                `;
+    }
+  }
+
+  // Render dynamic chips generated straight out of categories.json
+  function generateCategoryChips(categories) {
+    const seriesRow = document.getElementById('series-filter-row');
+
+    // Build the standard base "All" toggle option
+    let html = `
+                <div class="chip active" data-filter-type="series" data-value="all">
+                    <span class="material-icons-rounded">check</span>All Series
+                </div>
+            `;
+
+    categories.forEach(cat => {
+      html += `
+                    <div class="chip" data-filter-type="series" data-value="${cat.id}">
+                        <span class="material-icons-rounded">check</span>${cat.label}
+                    </div>
+                `;
+    });
+
+    seriesRow.innerHTML = html;
+    setupDynamicChipsListeners();
+  }
+
+  function setupDynamicChipsListeners() {
+    document.querySelectorAll('#series-filter-row .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#series-filter-row .chip').forEach(sib => sib.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilters.series = chip.getAttribute('data-value');
+        applyFiltersAndRender();
+      });
+    });
+  }
+
+  function setupStatusFilterListeners() {
+    document.querySelectorAll('.chip[data-filter-type="status"]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip[data-filter-type="status"]').forEach(sib => sib.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilters.status = chip.getAttribute('data-value');
+        applyFiltersAndRender();
+      });
+    });
+  }
+
+  function applyFiltersAndRender() {
+    const collectedIds = getCollectedIds();
+
+    const filtered = fullCollectionData.filter(card => {
+      const matchesSeries = (activeFilters.series === 'all' || card.series === activeFilters.series);
+
+      const isOwned = collectedIds.includes(card.card_id);
+      let matchesStatus = true;
+      if (activeFilters.status === 'collected') matchesStatus = isOwned;
+      if (activeFilters.status === 'uncollected') matchesStatus = !isOwned;
+
+      return matchesSeries && matchesStatus;
+    });
+
+    renderGrid(filtered, collectedIds);
+  }
+
+  function renderGrid(items, collectedIds) {
+    const container = document.getElementById('card-container');
+    const stats = document.getElementById('total-stats');
+    container.innerHTML = '';
+
+    let totalValue = 0;
+    let totalCollectedCount = 0;
+
+    fullCollectionData.forEach(c => {
+      if(collectedIds.includes(c.card_id)) {
+        totalCollectedCount++;
+        const cleanPrice = parseFloat(c.est_price.replace(/[^0-9.-]+/g, "")) || 0;
+        totalValue += cleanPrice;
+      }
+    });
+
+    stats.textContent = `Collected: ${totalCollectedCount} / ${fullCollectionData.length} Cards • Vault Value: $${totalValue.toFixed(2)}`;
+
+    if (items.length === 0) {
+      container.innerHTML = `<p class="error-msg" style="background:transparent; color:var(--md-sys-color-on-surface-variant)">No matching items match your active parameters.</p>`;
+      return;
+    }
+
+    items.forEach(card => {
+      const hasCard = collectedIds.includes(card.card_id);
+      const cardEl = document.createElement('div');
+      cardEl.className = `yamper-card ${hasCard ? 'collected' : ''}`;
+
+      cardEl.innerHTML = `
+                    <div class="image-container">
+                        <img src="${card.image_url}" alt="Card Art" loading="lazy">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">${card.name || 'Yamper'}</div>
+                        <div class="meta-row">
+                            <span class="set-number">${card.set_number}</span>
+                            <span class="price-tag">${card.est_price}</span>
+                        </div>
+                    </div>
+                    <button class="action-btn" onclick="toggleOwnership('${card.card_id}')">
+                        <span class="material-icons-rounded">${hasCard ? 'remove_circle_outline' : 'add_circle'}</span>
+                        ${hasCard ? 'Remove from Deck' : 'Add to Deck'}
+                    </button>
+                `;
+      container.appendChild(cardEl);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initDashboard);
+</script>
+</body>
+</html>

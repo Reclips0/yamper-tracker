@@ -1,0 +1,66 @@
+[
+  {
+    "card_id": "swsh073",
+    "series": "Sw/Sh",
+    "name": "Yamper - Sword & Shield Base",
+    "image_url": "https://www.serebii.net/card/swordshield/73.jpg",
+    "set_number": "073/202",
+    "est_price": "$0.26"
+  },
+  {
+    "card_id": "swsh074",
+    "series": "Sw/Sh",
+    "name": "Yamper - Sword & Shield Base",
+    "image_url": "https://www.serebii.net/card/swordshield/74.jpg",
+    "set_number": "074/202",
+    "est_price": "$0.44"
+  },
+  {
+    "card_id": "swsh074_promo",
+    "series": "Promo",
+    "name": "Yamper - Pokemon 2022 Battle Academy",
+    "image_url" : "https://i.ebayimg.com/images/g/b0oAAeSwSQRp2trb/s-l500.jpg",
+    "set_number": "074/202",
+    "est_price": "$1.59"
+  },
+  {
+    "card_id": "sh039",
+    "series": "S/V",
+    "name": "Yamper - Shining Fates",
+    "image_url": "https://www.serebii.net/card/shiningfates/h39.jpg",
+    "set_number": "SV039/SV122",
+    "est_price": "$14.76"
+  },
+  {
+    "card_id": "bs052",
+    "series": "Sw/Sh",
+    "name": "Yamper - Battle Styles",
+    "image_url": "https://www.serebii.net/card/battlestyles/52.jpg",
+    "set_number": "052/163",
+    "est_price": "$0.66"
+  },
+  {
+    "card_id": "tf058",
+    "series": "S/V",
+    "name": "Yamper - Temporal Forces",
+    "image_url": "https://www.serebii.net/card/temporalforces/58.jpg",
+    "set_number": "058/162",
+    "est_price": "$0.25"
+  },
+  {
+    "card_id": "pf030",
+    "series": "Mega",
+    "name": "Yamper - Phantasmal Flames",
+    "image_url": "https://www.serebii.net/card/phantasmalflames/30.jpg",
+    "set_number": "030/094",
+    "est_price": "$0.27"
+  },
+  {
+    "card_id": "pf030",
+    "series": "Mega",
+    "name": "Yamper - Phantasmal Flames Illustration Rare",
+    "image_url": "https://www.serebii.net/card/phantasmalflames/99.jpg",
+    "set_number": "099/094",
+    "est_price": "$3.19"
+  }
+]
