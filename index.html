@@ -175,8 +175,24 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
       gap: 2rem;
+    }
+
+    @media (orientation: portrait) {
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 2rem;
+      }
+    }
+
+    @media (orientation: landscape) {
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 2rem;
+      }
     }
 
     .yamper-card {
@@ -336,7 +352,7 @@
 <footer>
   <div class="footer-container">
     <div class="footer-section">
-      <h4>Website v2</h4>
+      <h4>Website v3</h4>
       <h4>Card list and info updated Jun 19 2026</h4>
     </div>
     <div class="footer-section">
