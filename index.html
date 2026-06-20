@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Rounded" rel="stylesheet">
 
   <style>
     :root {
@@ -35,6 +34,26 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    footer {
+      padding: 40px 20px;
+      width: 100%;
+    }
+
+    .footer-container {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      border-top: 1px solid #444;
+      padding-top: 20px;
     }
 
     body {
@@ -288,7 +307,7 @@
 <body>
 
 <header>
-  <h1><span class="material-icons-rounded">electric_bolt</span> Yamper Vault</h1>
+  <h1><ion-icon name="flash"></ion-icon> Yamper Vault</h1>
   <div class="stats-badge" id="total-stats">Computing status...</div>
 </header>
 
@@ -300,19 +319,35 @@
   <div class="filter-group">
     <span class="filter-label">Status:</span>
     <div class="chip active" data-filter-type="status" data-value="all">
-      <span class="material-icons-rounded">check</span>Show All
+      <span class="material-icons-rounded"><ion-icon name="checkmark-circle"></ion-icon></span>Show All
     </div>
     <div class="chip" data-filter-type="status" data-value="collected">
-      <span class="material-icons-rounded">check</span>Collected Only
+      <span class="material-icons-rounded"><ion-icon name="checkmark-circle"></ion-icon></span>Collected Only
     </div>
     <div class="chip" data-filter-type="status" data-value="uncollected">
-      <span class="material-icons-rounded">check</span>Not Collected
+      <span class="material-icons-rounded"><ion-icon name="checkmark-circle"></ion-icon></span>Not Collected
     </div>
   </div>
 </section>
 
 <main class="card-grid" id="card-container">
 </main>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Website v2</h4>
+      <h4>Card list and info updated Jun 19 2026</h4>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="https://github.com/Reclips0/yamper-tracker">Github</a></li>
+        <li><a href="https://reclips0.github.io">Reclips</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 <script>
   let fullCollectionData = [];
@@ -375,14 +410,14 @@
     // Build the standard base "All" toggle option
     let html = `
                 <div class="chip active" data-filter-type="series" data-value="all">
-                    <span class="material-icons-rounded">check</span>All Series
+                    <span class="material-icons-rounded"><ion-icon name="checkmark-circle"></ion-icon></span>All Series
                 </div>
             `;
 
     categories.forEach(cat => {
       html += `
                     <div class="chip" data-filter-type="series" data-value="${cat.id}">
-                        <span class="material-icons-rounded">check</span>${cat.label}
+                        <span class="material-icons-rounded"><ion-icon name="checkmark-circle"></ion-icon></span>${cat.label}
                     </div>
                 `;
     });
@@ -470,15 +505,23 @@
                         </div>
                     </div>
                     <button class="action-btn" onclick="toggleOwnership('${card.card_id}')">
-                        <span class="material-icons-rounded">${hasCard ? 'remove_circle_outline' : 'add_circle'}</span>
+                        <ion-icon class="material-icons-rounded" name=${hasCard ? 'remove-circle-outline' : 'add-circle'}></ion-icon>
                         ${hasCard ? 'Remove from Deck' : 'Add to Deck'}
                     </button>
                 `;
       container.appendChild(cardEl);
     });
+
+    if (window.Ionicons && typeof window.Ionicons.lazyLoadIcon === 'function') {
+      document.querySelectorAll('ion-icon').forEach(icon => {
+        window.Ionicons.lazyLoadIcon(icon);
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', initDashboard);
 </script>
+<script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
