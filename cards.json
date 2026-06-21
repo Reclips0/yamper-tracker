@@ -29,7 +29,7 @@
     "name": "Yamper - Shining Fates",
     "image_url": "https://www.serebii.net/card/shiningfates/h39.jpg",
     "set_number": "SV039/SV122",
-    "est_price": "$14.76"
+    "est_price": "$16.48"
   },
   {
     "card_id": "bs052",
@@ -62,5 +62,37 @@
     "image_url": "https://www.serebii.net/card/phantasmalflames/99.jpg",
     "set_number": "099/094",
     "est_price": "$3.19"
+  },
+  {
+    "card_id": "da166",
+    "series": "Sw/Sh",
+    "name": "Pokemon Breeder's Nurturing",
+    "image_url": "https://www.serebii.net/card/darknessablaze/166.jpg",
+    "set_number": "166/189",
+    "est_price": "$0.34"
+  },
+  {
+    "card_id": "da188",
+    "series": "Sw/Sh",
+    "name": "Pokemon Breeder's Nurturing Ultra Rare",
+    "image_url": "https://www.serebii.net/card/darknessablaze/188.jpg",
+    "set_number": "188/189",
+    "est_price": "$3.20"
+  },
+  {
+    "card_id": "da195",
+    "series": "Sw/Sh",
+    "name": "Pokemon Breeder's Nurturing Seceret Rare/Rainbow Rare",
+    "image_url": "https://www.serebii.net/card/darknessablaze/195.jpg",
+    "set_number": "195/189",
+    "est_price": "$4.70"
+  },
+  {
+    "card_id": "pr196",
+    "series": "S/V",
+    "name": "Joltik Paradox Rift Illustration Rare",
+    "image_url": "https://www.serebii.net/card/paradoxrift/196.jpg",
+    "set_number": "196/182",
+    "est_price": "$24.00"
   }
 ]

@@ -318,6 +318,23 @@
       text-align: center;
       font-weight: 500;
     }
+
+    .progress-container {
+      width: 100%;
+      height: 10px;
+      background-color: rgba(38, 26, 0, 0.15); /* Subtle dark track to contrast the header */
+      border-radius: var(--md-shape-corner-full);
+      overflow: hidden;
+      z-index: 1;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--md-sys-color-primary);
+      width: 0%; /* Starts at 0, JavaScript will update this */
+      transition: width var(--md-duration-long2) var(--md-easing-emphasized);
+    }
   </style>
 </head>
 <body>
@@ -325,6 +342,9 @@
 <header>
   <h1><ion-icon name="flash"></ion-icon> Yamper Vault</h1>
   <div class="stats-badge" id="total-stats">Computing status...</div>
+  <div class="progress-container">
+    <div class="progress-bar" id="collection-progress"></div>
+  </div>
 </header>
 
 <section class="controls-container">
@@ -352,8 +372,8 @@
 <footer>
   <div class="footer-container">
     <div class="footer-section">
-      <h4>Website v3</h4>
-      <h4>Card list and info updated Jun 19 2026</h4>
+      <h4>Website v4</h4>
+      <h4>Card list and info updated Jun 20 2026</h4>
     </div>
     <div class="footer-section">
       <h4>Quick Links</h4>
@@ -498,6 +518,10 @@
     });
 
     stats.textContent = `Collected: ${totalCollectedCount} / ${fullCollectionData.length} Cards • Vault Value: $${totalValue.toFixed(2)}`;
+
+    const progressBar = document.getElementById('collection-progress');
+    const progressPercent = fullCollectionData.length ? (totalCollectedCount / fullCollectionData.length) * 100 : 0;
+    progressBar.style.width = `${progressPercent}%`;
 
     if (items.length === 0) {
       container.innerHTML = `<p class="error-msg" style="background:transparent; color:var(--md-sys-color-on-surface-variant)">No matching items match your active parameters.</p>`;
